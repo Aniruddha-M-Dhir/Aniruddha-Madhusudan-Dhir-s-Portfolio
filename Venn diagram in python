@@ -1,15 +1,18 @@
-# Aniruddha Madhusudan Dhir
+#Aniruddha Madhusudan Dhir
+
+
+
 from matplotlib_venn import venn3, venn3_circles
 import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle
 
-# sets 
+#sets
 A = set(['a','b','c','k','m','n','v','w','x','p','q','r'])
 B = set(['d','e','f','k','m','n','v','w','x','s','t','u'])
 C = set(['p','q','r','v','w','x','s','t','u','g','h','j'])
 labels = ['A','B','C']
 
-#grey box 
+#figure & grey box 
 fig, ax = plt.subplots(figsize=(7,7))
 
 grey_box = Rectangle((0,0), 1, 1, transform=ax.transAxes,
@@ -20,17 +23,16 @@ ax.set_xlim(0,1)
 ax.set_ylim(0,1)
 ax.axis("off")
 
-#title & universe setting on x and y axis
-fig.text(0.39, 0.88, "Venn Diagram", ha="left", va="bottom", fontsize=18)
+# title & universe 
+fig.text(0.39, 0.88, "VENN DIAGRAM", ha="left", va="bottom", fontsize=18)
 fig.text(0.13, 0.88, "U=23",        ha="left", va="bottom", fontsize=14)
 
-# venn3 inside the grey box
+# venn diagram
 v = venn3([A, B, C], set_labels=labels, ax=ax)
 venn3_circles([A, B, C], ax=ax, linewidth=2, color="black")
 # Put "y, z" in the universe region (outside all circles)
 ax.text(0.78, 0.17, "y, z", transform=ax.transAxes, fontsize=11)
-
-# decide how the elements inside the venn diagram interact
+# How the elements interact with each other
 A_only  = A - B - C
 B_only  = B - A - C
 C_only  = C - A - B
@@ -38,7 +40,7 @@ AB_only = (A & B) - C
 AC_only = (A & C) - B
 BC_only = (B & C) - A
 ABC     =  A & B & C
-
+fmt     = lambda s: ", ".join(sorted(s)) if s else "∅"
 
 v.get_label_by_id('100').set_text(fmt(A_only))
 v.get_label_by_id('010').set_text(fmt(B_only))
@@ -49,4 +51,3 @@ v.get_label_by_id('011').set_text(fmt(BC_only))
 v.get_label_by_id('111').set_text(fmt(ABC))
 
 plt.show()
-
